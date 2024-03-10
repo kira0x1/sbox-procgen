@@ -12,6 +12,7 @@ public sealed class LevelGenerator : Component
 
     [Property] private bool ClampValues { get; set; } = false;
     [Property] private int BlocksRes { get; set; } = 20;
+    [Property] private float VoxelSize { get; set; } = 1;
 
     [Property, Group("Colors")] private Color waterColor { get; set; } = Color.Blue;
     [Property, Group("Colors")] private Color groundColor { get; set; } = Color.Orange;
@@ -83,6 +84,45 @@ public sealed class LevelGenerator : Component
 
 
         SpawnedBlocks.Clear();
+    }
+
+    public void DeleteChunkMesh()
+    {
+        foreach (GameObject child in GameObject.Children)
+        {
+            child.Destroy();
+        }
+    }
+
+    public GameObject CreateChunkMesh()
+    {
+        Mesh mesh = new Mesh();
+        mesh.Material = Material.Load("materials/architecture/tiles/brick_wall_large01a.vmat");
+        mesh.CreateVertexBuffer(6, SimpleVertex.Layout, CreateFace());
+        ModelBuilder model = new ModelBuilder();
+        model.AddMesh(mesh);
+        var obj = Scene.CreateObject();
+        var modelRend = obj.Components.Create<ModelRenderer>();
+        modelRend.Model = model.Create();
+        obj.Transform.Scale = Vector3.One * 50;
+        obj.SetParent(GameObject);
+        return obj;
+    }
+
+    private List<SimpleVertex> CreateFace()
+    {
+        List<SimpleVertex> simpleVertices = new List<SimpleVertex>();
+        var tangent = new Vector3(1, 0, 0);
+        simpleVertices.Add(new SimpleVertex(Vector3.Zero, Vector3.Backward, tangent, Vector2.Zero));
+        simpleVertices.Add(new SimpleVertex(Vector3.Right, Vector3.Backward, tangent, new Vector2(1f, 0f)));
+        simpleVertices.Add(new SimpleVertex(Vector3.Up, Vector3.Backward, tangent, new Vector2(0f, 1f)));
+
+        simpleVertices.Add(new SimpleVertex(new Vector3(0f, -1f, 1f), Vector3.Backward, tangent, new Vector2(1f, 1f)));
+        simpleVertices.Add(new SimpleVertex(Vector3.Up, Vector3.Backward, tangent, new Vector2(0f, 1f)));
+        simpleVertices.Add(new SimpleVertex(Vector3.Right, Vector3.Backward, tangent, new Vector2(1f, 0f)));
+
+
+        return simpleVertices;
     }
 
     private GameObject CreateBlock(Color? color = null)

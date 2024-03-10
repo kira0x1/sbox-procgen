@@ -75,10 +75,4 @@ public sealed class NoiseRenderer : Component, Component.ExecuteInEditor
 
         sp.Texture = tx;
     }
-
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-        Components.Get<NoiseGenerator>().UpdateNoise();
-    }
 }

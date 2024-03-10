@@ -33,13 +33,19 @@ public class LevelGeneratorTool : EditorTool<LevelGenerator>
         AddOverlay(window, TextFlag.LeftTop, 10);
     }
 
+
     private void OnCreateLevel()
     {
-        Scene.Components.GetAll<LevelGenerator>().FirstOrDefault().GenerateLevel();
+        var levelGen = Scene.Components.GetAll<LevelGenerator>().FirstOrDefault();
+        var chunk = levelGen?.CreateChunkMesh();
+        levelGen?.GenerateLevel();
+        Selection.Set(chunk);
     }
 
     private void OnDeleteLevel()
     {
-        Scene.Components.GetAll<LevelGenerator>().FirstOrDefault().ClearBlocks();
+        var levelGen = Scene.Components.GetAll<LevelGenerator>().FirstOrDefault();
+        levelGen?.DeleteChunkMesh();
+        Scene.Components.GetAll<LevelGenerator>().FirstOrDefault()?.ClearBlocks();
     }
 }

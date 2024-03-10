@@ -46,6 +46,7 @@
     {
       "Id": "92428fca-e5e6-4435-9416-f9465ef2764f",
       "Name": "Plane",
+      "Rotation": "0,0,-0.7071067,0.7071068",
       "Scale": "10,10,5",
       "Enabled": true,
       "Components": [
@@ -53,10 +54,10 @@
           "__type": "ModelRenderer",
           "BodyGroups": 18446744073709551615,
           "MaterialGroup": null,
-          "MaterialOverride": "materials/default.vmat",
+          "MaterialOverride": "materials/uvmat.vmat",
           "Model": "models/dev/plane.vmdl",
           "RenderType": "On",
-          "Tint": "0.38674,0.59772,0.82326,1"
+          "Tint": "1,1,1,1"
         },
         {
           "__type": "BoxCollider",
@@ -71,8 +72,7 @@
     {
       "Id": "555697e1-9576-47cf-9a76-e0f61a856512",
       "Name": "Camera",
-      "Position": "-558.9916,-821.2775,961.4553",
-      "Rotation": "-0.1043719,0.2060834,0.4395942,0.8679823",
+      "Position": "-300,-269.8956,75",
       "Enabled": true,
       "Components": [
         {
@@ -1239,10 +1239,10 @@
       "Id": "a8b1ebe6-fcf9-4ee2-b4b8-60a5ae41f370",
       "Name": "noise",
       "Position": "0,0,576",
-      "Enabled": true,
       "Components": [
         {
           "__type": "NoiseGenerator",
+          "__enabled": false,
           "ClampValues": false,
           "Intensity": 2.59,
           "MapSize": 5,
@@ -1271,11 +1271,174 @@
         },
         {
           "__type": "LevelGenerator",
+          "__enabled": false,
+          "BlocksRes": 20,
           "ClampValues": true,
           "grassColor": "0.44372,0.73953,0.44372,1",
           "groundColor": "0.81395,0.67615,0.46944,1",
           "Offset": 0,
+          "VoxelSize": 1,
           "waterColor": "0.69302,0.8414,1,1"
+        }
+      ]
+    },
+    {
+      "Id": "c5cad837-0ca5-494e-93cd-ac742be9d455",
+      "Name": "Player",
+      "Position": "0,-269.8956,0",
+      "Rotation": "0,0,0.09441879,-0.9955326",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "CharacterController",
+          "Acceleration": 10,
+          "Bounciness": 0.3,
+          "GroundAngle": 45,
+          "Height": 64,
+          "IgnoreLayers": "",
+          "Radius": 16,
+          "StepHeight": 18
+        },
+        {
+          "__type": "CitizenAnimationHelper",
+          "BodyWeight": 1,
+          "EyeSource": null,
+          "EyesWeight": 1,
+          "HeadWeight": 1,
+          "Height": 1,
+          "IkLeftFoot": null,
+          "IkLeftHand": null,
+          "IkRightFoot": null,
+          "IkRightHand": null,
+          "LookAt": null,
+          "LookAtEnabled": false,
+          "Target": {
+            "_type": "component",
+            "go": "55b4b022-f7f0-42fa-a80a-0c6d6b79c55a",
+            "component_type": "SkinnedModelRenderer"
+          }
+        },
+        {
+          "__type": "TPSController",
+          "Body": {
+            "_type": "gameobject",
+            "go": "55b4b022-f7f0-42fa-a80a-0c6d6b79c55a"
+          },
+          "BodyTurnSpeed": 3,
+          "DistanceOffset": 300,
+          "Eye": {
+            "_type": "gameobject",
+            "go": "060b579b-1a40-4f08-913e-bdf5866b8c50"
+          },
+          "Gravity": "0,0,800",
+          "HeightOffset": 75,
+          "MaxDistance": 620,
+          "MinBodyTurnDifference": 50,
+          "MinBodyTurnVelocity": 10,
+          "MinDistance": 180,
+          "RunSpeed": 320,
+          "WalkSpeed": 110
+        }
+      ],
+      "Children": [
+        {
+          "Id": "55b4b022-f7f0-42fa-a80a-0c6d6b79c55a",
+          "Name": "Model",
+          "Position": "0,0,0",
+          "Rotation": "0,0,-0.09441879,-0.9955326",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "SkinnedModelRenderer",
+              "AnimationGraph": null,
+              "BodyGroups": 337,
+              "BoneMergeTarget": null,
+              "CreateBoneObjects": false,
+              "MaterialGroup": null,
+              "MaterialOverride": null,
+              "Model": "models/citizen/citizen.vmdl",
+              "RenderType": "On",
+              "Tint": "1,1,1,1"
+            }
+          ]
+        },
+        {
+          "Id": "060b579b-1a40-4f08-913e-bdf5866b8c50",
+          "Name": "Eye",
+          "Position": "0,0,64",
+          "Enabled": true
+        },
+        {
+          "Id": "d711083b-9272-46d4-9464-432c141bab8d",
+          "Name": "Chest",
+          "Position": "0,0,0",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "SkinnedModelRenderer",
+              "AnimationGraph": null,
+              "BodyGroups": 18446744073709551615,
+              "BoneMergeTarget": {
+                "_type": "component",
+                "go": "55b4b022-f7f0-42fa-a80a-0c6d6b79c55a",
+                "component_type": "SkinnedModelRenderer"
+              },
+              "CreateBoneObjects": false,
+              "MaterialGroup": null,
+              "MaterialOverride": null,
+              "Model": "models/citizen_clothes/shirt/buttoned_shirt/models/buttoned_shirt.vmdl",
+              "RenderType": "On",
+              "Tint": "1,1,1,1"
+            }
+          ]
+        },
+        {
+          "Id": "c5bf2b37-5574-4bfa-bea6-cf60ce112854",
+          "Name": "Legs",
+          "Rotation": "0,0,-0.09441879,-0.9955326",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "SkinnedModelRenderer",
+              "AnimationGraph": null,
+              "BodyGroups": 18446744073709551615,
+              "BoneMergeTarget": {
+                "_type": "component",
+                "go": "55b4b022-f7f0-42fa-a80a-0c6d6b79c55a",
+                "component_type": "SkinnedModelRenderer"
+              },
+              "CreateBoneObjects": false,
+              "MaterialGroup": null,
+              "MaterialOverride": null,
+              "Model": "models/citizen_clothes/jacket/longsleeve/models/jeans.vmdl",
+              "RenderType": "On",
+              "Tint": "1,1,1,1"
+            }
+          ]
+        },
+        {
+          "Id": "f213005c-d6b9-4917-81d0-9ebf5f851503",
+          "Name": "Head",
+          "Rotation": "0,0,0.187994,0.9821702",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "SkinnedModelRenderer",
+              "AnimationGraph": null,
+              "BodyGroups": 18446744073709551615,
+              "BoneMergeTarget": {
+                "_type": "component",
+                "go": "55b4b022-f7f0-42fa-a80a-0c6d6b79c55a",
+                "component_type": "SkinnedModelRenderer"
+              },
+              "CreateBoneObjects": false,
+              "MaterialGroup": null,
+              "MaterialOverride": null,
+              "Model": "models/citizen_clothes/hat/fedora/models/fedora_brown.vmdl",
+              "RenderType": "On",
+              "Tint": "1,1,1,1"
+            }
+          ]
         }
       ]
     }
@@ -1303,7 +1466,7 @@
   },
   "Title": "mob_testroom_01",
   "Description": "",
-  "LastSaved": "2024-03-09T07:47:48.199398\u002B00:00",
+  "LastSaved": "2024-03-09T20:45:42.2722326\u002B00:00",
   "__references": [
     "baik.nordicsword"
   ]
